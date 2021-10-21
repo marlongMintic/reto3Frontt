@@ -85,7 +85,7 @@
         
     }
 
-    .container_table_in1{
+    .container_table_in1,.container_table_in2{
         display:none;  
     }
   
@@ -118,17 +118,30 @@
             <a href="crearReserva.html">
                 <input type="button" value="Crear Reserva"></a>
 
+            <a href="calificarReserva.html">
+                <input type="button" value="Calificar reserva"></a>
+            
             <a href="crearCategoria.html">
                 <input type="button" value="Crear Categoria"></a>
 
             <a href="mensaje.html">
                 <input type="button" value="Enviar Mensaje"></a>
+                
+                
+            
+                <input type="button" value="Ver Mensajes" id="verMensaje">
         </div>
         <div >
             <table>
                 <tr class="container_table_in1">
                     <td>ID</td>
                     <td>Nombre</td>
+                </tr>
+                <tr class="container_table_in2">
+                    <td>Id Cliente</td>
+                    <td>Habitaicion</td>
+                    <td>Mensaje</td>
+
                 </tr>
             </table>
             <table class="container_table" id="container_table_id">
@@ -139,12 +152,43 @@
     <script>
         var verClientesBtn= document.getElementById("clientes");
         var verHabitacionesBtn= document.getElementById("habitaciones");
+        var verMensajesBtn = document.getElementById("verMensaje")
         var container_table_id = document.getElementById("container_table_id")
 
         var container_table_in = document.querySelector(".container_table_in")
         var container_table_in1 = document.querySelector(".container_table_in1")
+        var container_table_in2 = document.querySelector(".container_table_in2")
+
         
-        verClientesBtn.addEventListener("click",function(){
+        verMensajesBtn.addEventListener("click",function(){
+            console.log("holaaa");
+            container_table_in2.style = "display:block"
+            container_table_id.innerHTML = ""
+            let ajaxCliente = $.ajax({
+                method:"GET",
+                url:"https://gd67668ef6ca690-marlongbd.adb.sa-santiago-1.oraclecloudapps.com/ords/admin/client/client"
+            })
+            ajaxCliente.done(function(g) {
+                let array1 = []
+                for (let i = g.items.length-1; i >= 0; i--) {
+                    array1.unshift(g.items[i]) 
+                }
+                array1.forEach(element => {
+                    console.log(element);
+                    /* ######falta colocar los valores adecuados para cada fila y cambiarle los
+                     valores de variables que estan entre comillas simples */
+                    container_table_id.innerHTML += '  <tr class="container_table_in2"><td>'+
+                        'element.id'+'</td><td>'+'element.name'+
+                            '<a href="detallesClientes.html"><input type="button" value="Mod"></a></td></tr>'  
+                }); 
+                container_table_id.style = 'display:block';
+                console.log("datos obtenidos");   
+            })
+            ajaxCliente.fail(function(g){
+                console.log("errrror" ,g);
+            })
+        })
+            verClientesBtn.addEventListener("click",function(){
             container_table_in1.style = "display:block"
             container_table_id.innerHTML = ""
             let ajaxCliente = $.ajax({

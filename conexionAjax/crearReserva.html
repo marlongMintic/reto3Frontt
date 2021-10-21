@@ -56,13 +56,12 @@
         border:2px solid #4d7ce0;
         box-shadow: 0px 0px 7px #b3b3b3;
     }
-    table, th, td {
+     th, td {
       border:1px solid black; 
     }
     table{
         display: flex;
         justify-content: center;
-        max-width:500px;
         margin:0 auto;  
     }
     table:first-child{
@@ -72,9 +71,20 @@
         margin-top:30px ;
     }
     td{
-        width: 100px;
+        width: 130px;
         height: 40px;
         text-align: center;
+    }
+    input[type=number]{
+        background-color: #b8b8b8;
+        border:none;
+        width:40px;
+        height:24px;
+        outline: none;
+        padding-left:5px;
+    }
+    .container_tr{
+        padding-left: 130px;
     }
 </style>
 <body>
@@ -92,7 +102,7 @@
                     <input type="text" name="nombreHabitacion" id="nombreHabitacion" placeholder="Nombre Habitacion">
                     <!-- #########no se si la fecha inicial es tomada del sistema o por el usuario -->
                     <!-- <input type="text" name="fechaInicial" id="fechaInicial" placeholder="Fecha inicial">-->
-                    <input type="date" name="fechaFinal" id="fechaFinal" placeholder="Fecha final"> 
+                    <input type="date"  name="fechaFinal" id="fechaFinal" placeholder="Fecha final"> 
                         
                 </div>
                 <div>
@@ -105,6 +115,11 @@
 
     <!-- <h2>Tabla:</h2> -->
     <div id = "container_table"></div>
+    <!-- tabla que se mostrara abajo de la primera fila -->
+    <table class="container_tr"><tr ><td >"+iiiiii+
+        "</td><td>"+aaaaa+"</td><td>"+eeeee+
+        "</td><td>"+
+        000000+" </td><td class="container_calificacion"><input type="number" min="0" max ="5" id="inputNumber"><input type="button" value ="Calificar" id="calificarBtn"></td></tr></table>
 
     <script>
         var idCliente= document.getElementById('idCliente');
@@ -122,6 +137,10 @@
         var fechaInicial= fechaAhora();
         var fechaFinal= document.getElementById('fechaFinal');
         
+        var inputBtn = document.getElementById("inputBtn")
+        var calificarBtn = document.getElementById("calificarBtn")
+        
+        
         var sendbtn= document.getElementById('sendbtn');
         var getbtn= document.getElementById('getbtn');
           
@@ -132,6 +151,13 @@
             +"</td><td>Fecha final</td></tr></table>"
         
 
+        calificarBtn.addEventListener("click",function(){
+            //#########falta colocar el dato de calificacion 
+            //FALTA MIRAR SI EN LA BASE DE DATOS HAY CALIFICACION, SI NO TOCA VER QUE SE HACE CON ESTO
+            var calificacion = parseInt(inputNumber.value)
+            console.log("la calificacion es: "+calificacion);
+        }) 
+        
         sendbtn.addEventListener("click",function(){
             postDates();
         })
@@ -157,11 +183,12 @@
                 }
                 //################## no se han modificado los datos a recorrer en el array
                 array1.forEach(element => {
+                    //########falta colocar las variables correspondientes
                     container_table.innerHTML+=
-                        "<table class='default'><tr><td>"+element.id+
-                        "</td><td>"+element.room+"</td><td>"+element.stars+
-                        "</td><td>"+element.category_id+"</td><td>"+
-                        element.description+"</td></tr></table>"           
+                    "<table><tr><td>"+iiiiii+
+                    "</td><td>"+aaaaa+"</td><td>"+eeeee+
+                    "</td><td>"+
+                    000000+"</td></tr></table>"       
                 });      
                 console.log("datos obtenidos");
             })
@@ -194,6 +221,7 @@
             
             idCliente.value=null;
             nombreHabitacion.value=null;
+            //la fecha inicial no la coloca el cliente 
             //fechaInicial.value=null;
             fechaFinal.value=null;
         })
