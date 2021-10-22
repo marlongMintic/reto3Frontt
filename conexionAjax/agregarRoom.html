@@ -143,16 +143,16 @@
         getbtn.addEventListener("click",function(){
             getDates();
         })
+        const urlBase = "http://129.151.118.47:8080/api/";
 
-        const urlOracle = "https://gd67668ef6ca690-marlongbd.adb.sa-santiago-1.oraclecloudapps.com/ords/admin/room/room"
         function getDates(){
             const ajax = $.ajax({
                 method:"GET",
-                url:urlOracle
+                url:urlBase + "Room/all"
             })
             ajax.done(function(g){
                 
-                container_table.innerHTML=""
+               /*  container_table.innerHTML=""
                 container_table.innerHTML=
                     "<table><tr><td>ID</td><td>Nombre</td><td>Estrellas"
                     +"</td><td>Categoria</td><td>Descripcion</td></tr></table>"
@@ -162,7 +162,8 @@
                 }
                 array1.forEach(element => {
                     container_table.innerHTML+="<table class='default'><tr><td>"+element.id+"</td><td>"+element.room+"</td><td>"+element.stars+"</td><td>"+element.category_id+"</td><td>"+element.description+"</td></tr></table>"           
-                });      
+                });       */
+                console.log(g);
                 console.log("datos obtenidos");
             })
             ajax.fail(function(g){
@@ -173,14 +174,24 @@
     function postDates(){
         var ajax = $.ajax({
           type:"POST",
-          url:urlOracle,
+          url:urlBase + "Room/save",
+          dataType : 'json',
           data:{
-              id:parseInt(id.value),
-              room:room.value,
+              name:room.value,
               stars:parseInt(stars.value),
-              category_id:parseInt(category_id.value),
+              category:{id:parseInt(category_id.value)},
+              hotel:"nombrehotel",
               description:description.value
             } 
+            /* 
+            {
+            "name":"425",
+            "stars":5,
+            "category":{"id":1},
+            "hotel":"DeCameron",
+            "description":"Habitación sencilla"
+            } 
+        */
         })
         ajax.done(function(res){
             console.log(res);
