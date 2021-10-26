@@ -153,9 +153,27 @@
                 for (let i = 0; i <= g.length-1; i++) {
                     array1.push(g[i]) 
                 }
+                let arrayMessages = []
+                let arrayReservations = []
+
                 array1.forEach(element => {
+                    //recorrido de mensajes
                     console.log(element);
-                    container_table.innerHTML+="<table class='default'><tr><td>"+element.idClient+"</td><td>"+element.name+"</td><td>"+element.email+"</td><td>"+element.age+"</td><td>"+element.messages+"</td><td>"+element.reservations+"</td></tr></table>"           
+                    for(let iMe = 0;iMe<= element.messages.length-1;iMe++){
+                        let mess = element.messages[iMe].messageText
+                        arrayMessages.push(mess)
+                    }
+                    //-------------------------
+                    //recorrido de reservaciones
+                    for(let iRe = 0;iRe<= element.reservations.length-1;iRe++){
+                        let reserv = new Date(element.reservations[iRe].startDate).toLocaleDateString()
+                        console.log(reserv);
+                        arrayReservations.push(reserv)
+                    }
+                    //-------------------------
+
+
+                    container_table.innerHTML+="<table class='default'><tr><td>"+element.idClient+"</td><td>"+element.name+"</td><td>"+element.email+"</td><td>"+element.age+"</td><td>"+arrayMessages+"</td><td style='word-wrap: break-word'>"+arrayReservations.length+"</td></tr></table>"           
                 });      
             })
             ajax.fail(function(g){

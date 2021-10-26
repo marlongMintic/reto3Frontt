@@ -139,11 +139,26 @@
                 }
                 //################## no se han modificado los datos a recorrer en el array
                 //#################### falta crear un arreglo donde s encuentren las habitaicones de cada categoria 
+                
+                let arrayHabitaciones = []
+                let arrayRandom = []
                 array1.forEach(element => {
+                    //recorrer habitaciones
+                    /* arrayRandom.push(element) */
+                    /* for(x of arrayRandom){
+                        console.log(x.rooms.length);
+                         for(let i = 0;i<= x.rooms.length;i++){
+                                console.log(i);
+                              console.log('....');
+                             let hab = element.rooms[i].name
+                            console.log("dato "+hab);
+                            arrayHabitaciones.push(hab) 
+                        } 
+                    } */
                     container_table.innerHTML+=
                         "<table class='default'><tr><td>"+element.name+
                         "</td><td>"+element.description+"</td><td>"+
-                        ""/*####aqui van las habitaciones de esta categoria*/+"</td></tr></table>"           
+                        arrayHabitaciones/*####aqui van las habitaciones de esta categoria*/+"</td></tr></table>"           
                 });      
                 console.log("datos obtenidos");
                 console.log(g);
