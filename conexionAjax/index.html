@@ -154,7 +154,7 @@
                 </tr>
             </table>
             <table class="container_table" id="container_table_id">
-  
+                
             </table>
         </div>
     </main>
@@ -168,7 +168,7 @@
         var container_table_in1 = document.querySelector(".container_table_in1")
         var container_table_in2 = document.querySelector(".container_table_in2")
 
-        
+        //###########################################
         verMensajesBtn.addEventListener("click",function(){
             console.log("holaaa");
             container_table_in2.style = "display:block"
@@ -197,23 +197,25 @@
                 console.log("errrror" ,g);
             })
         })
+        //###########################################
+
             verClientesBtn.addEventListener("click",function(){
             container_table_in1.style = "display:block"
             container_table_id.innerHTML = ""
             let ajaxCliente = $.ajax({
                 method:"GET",
-                url:"https://gd67668ef6ca690-marlongbd.adb.sa-santiago-1.oraclecloudapps.com/ords/admin/client/client"
+                url:"http://144.22.56.156:8080/api/Client/all"
             })
             ajaxCliente.done(function(g) {
                 let array1 = []
-                for (let i = g.items.length-1; i >= 0; i--) {
-                    array1.unshift(g.items[i]) 
+                for (let i = g.length-1; i >= 0; i--) {
+                    array1.unshift(g[i]) 
                 }
                 array1.forEach(element => {
                     console.log(element);
-                    container_table_id.innerHTML += '  <tr class="container_table_in2"><td>'+
-                        element.id+'</td><td>'+element.name+
-                            '<a href="detallesClientes.html"><input type="button" value="Mod"></a></td></tr>'  
+                    container_table_id.innerHTML += '  <tr class=""><td>'+
+                        element.idClient+'</td><td>'+element.name+
+                            '<a href="detallesClientes.html">' /*#####para el reto4<input type="button" value="Mod">*/+'</a></td></tr>'  
                 }); 
                 container_table_id.style = 'display:block';
                 console.log("datos obtenidos");   
@@ -222,6 +224,9 @@
                 console.log("errrror" ,g);
             })
         })
+
+
+
         //falta hacer ajax para poder ver las habitaciones
         verHabitacionesBtn.addEventListener("click",function(){
             container_table_in1.style = 'display:block';
@@ -230,23 +235,25 @@
         verHabitacionesBtn.addEventListener("click",function(){
             container_table_in1.style = "display:block"
             container_table_id.innerHTML = ""
-            let ajaxCliente = $.ajax({
+            let ajaxHabitaciones = $.ajax({
                 method:"GET",
-                url:"https://gd67668ef6ca690-marlongbd.adb.sa-santiago-1.oraclecloudapps.com/ords/admin/room/room"
+                url:"http://144.22.56.156:8080/api/Room/all"
             })
-            ajaxCliente.done(function(g) {
+            ajaxHabitaciones.done(function(g) {
                 let array1 = []
-                for (let i = g.items.length-1; i >= 0; i--) {
-                    array1.unshift(g.items[i]) 
+                for (let i = g.length-1; i >= 0; i--) {
+                    array1.unshift(g[i]) 
                 }
                 array1.forEach(element => {
                     console.log(element);
+                    console.log("sirves");
                     container_table_id.innerHTML += '  <tr class="container_table_in2"><td>'+element.id+'</td><td>'+element.room+'<a href="detallesRoom.html"><input type="button" value="Mod"></a></td></tr>'  
                 }); 
                 container_table_id.style = 'display:block';
-                console.log("datos obtenidos");   
+                console.log("datos obtenidos");
+                console.log(g);   
             })
-            ajaxCliente.fail(function(g){
+            ajaxHabitaciones.fail(function(g){
                 console.log("errrror" ,g);
             })
         })

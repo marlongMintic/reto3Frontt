@@ -105,15 +105,16 @@
         function postMensaje(){
             var ajax = $.ajax({
               type:"POST",
-              url:"https://gd67668ef6ca690-marlongbd.adb.sa-santiago-1.oraclecloudapps.com/ords/admin/message/message",
-              data:{
+              url:"http://144.22.56.156:8080/api/Message/save",
+              contentType: "application/json; charset=utf-8",
+                dataType: 'JSON',
+                data: JSON.stringify({
                   //####no se si se tenga que enviar tambien el id del mensaje
                     messageText:mensaje.value,
                     client:{idClient:idCliente.value},
                     //########falta tener el id de la habitacion con el nombre
                     room:{id:0}                    
-
-                } 
+                }) 
             })
             ajax.done(function(g){
                 console.log("the message is:");

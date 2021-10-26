@@ -112,7 +112,7 @@
 
     <script>
         //############cambiar la url 
-        const urlBase = "http://129.151.118.47:8080/api/";
+        const urlBase = "http://144.22.56.156:8080/api/";
         var id= document.getElementById('id');
         var names= document.getElementById('nombre');
         var emails= document.getElementById('correo');
@@ -150,7 +150,7 @@
                 container_table.innerHTML=
                     contenidoHeaderTabla
                 let array1 = []
-                for (let i = g.length-1; i >= 0; i--) {
+                for (let i = 0; i <= g.length-1; i++) {
                     array1.push(g[i]) 
                 }
                 array1.forEach(element => {
@@ -170,16 +170,17 @@
                 contraseña.value,
                 parseInt(ages.value));
             let ajax = $.ajax({
-            method:"POST",
-            url:"http://129.151.118.47:8080/api/Client/save",
-            dataType : 'json',
-            data:{
-                
-                name:names.value,
-                email:emails.value,
-                password:contraseña.value,
-                age:parseInt(ages.value)
-            }
+                method:"POST",
+                url:"http://144.22.56.156:8080/api/Client/save",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'JSON',
+                data: JSON.stringify(
+                    {
+                        name:names.value,
+                        email:emails.value,
+                        password:contraseña.value,
+                        age:parseInt(ages.value)
+                    })
             })
             ajax.done(function(res){
                 console.log(res);
