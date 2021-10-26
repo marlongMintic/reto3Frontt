@@ -86,7 +86,8 @@
         padding-left:5px;
     }
     .container_tr{
-        padding-left: 130px;
+        /* para colocar la calificacion activar padding 130px */
+        /* padding-left: 130px; */
     }
 </style>
 <body>
@@ -184,13 +185,20 @@
                 //################## no se han modificado los datos a recorrer en el array
                 array1.forEach(element => {
                 console.log(array1);
+                    //obetner fecha
+
+                    let fechaFormatStart = new Date(element.startDate).toLocaleDateString()
+                    let fechaFormatDevolution = new Date(element.devolutionDate).toLocaleDateString()
+
+                   
+
+
 
                     //########falta colocar las variables correspondientes
                     container_table.innerHTML+=
                     "<table class='container_tr'><tr><td>"+element.idReservation+
-                    "</td><td>"+element.room.name+"</td><td>"+element.startDate+
-                    "</td><td>"+
-                    element.devolutionDate+"</td><td class='container_calificacion'><input type='number' min='0' max ='5' class='inputNumber'><input type='button' value ='Calificar' class='calificarBtn'></td></tr></table>"       
+                    "</td><td>"+element.room.name+"</td><td>"+fechaFormatStart+
+                    "</td><td>"+ fechaFormatDevolution+"</td></tr></table>"       
                 });      
                 console.log("datos obtenidos");
                 console.log(array1);
