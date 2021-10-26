@@ -115,11 +115,11 @@
     <!-- <h2>Tabla:</h2> -->
     <div id = "container_table"></div>
     <!-- tabla que se mostrara abajo de la primera fila -->
-    <table class="container_tr"><tr ><td >"+iiiiii+
+  <!--   <table class="container_tr"><tr ><td >"+iiiiii+
         "</td><td>"+aaaaa+"</td><td>"+eeeee+
         "</td><td>"+
         000000+" </td><td class="container_calificacion"><input type="number" min="0" max ="5" id="inputNumber"><input type="button" value ="Calificar" id="calificarBtn"></td></tr></table>
-
+ -->
     <script>
         var idCliente= document.getElementById('idCliente');
         var nombreHabitacion= document.getElementById('nombreHabitacion');
@@ -136,8 +136,8 @@
         var fechaInicial= fechaAhora();
         var fechaFinal= document.getElementById('fechaFinal');
         
-        var inputBtn = document.getElementById("inputBtn")
-        var calificarBtn = document.getElementById("calificarBtn")
+        //###var inputBtn = document.getElementById("inputBtn")
+        //###var calificarBtn = document.getElementById("calificarBtn")
         
         
         var sendbtn= document.getElementById('sendbtn');
@@ -150,12 +150,13 @@
             +"</td><td>Fecha final</td></tr></table>"
         
 
+        /* ##############################################
         calificarBtn.addEventListener("click",function(){
             //#########falta colocar el dato de calificacion 
             //FALTA MIRAR SI EN LA BASE DE DATOS HAY CALIFICACION, SI NO TOCA VER QUE SE HACE CON ESTO
             var calificacion = parseInt(inputNumber.value)
             console.log("la calificacion es: "+calificacion);
-        }) 
+        })  */
         
         sendbtn.addEventListener("click",function(){
             postDates();
@@ -177,63 +178,80 @@
                 "<table><tr><td>Id cliente</td><td>Nombre habitacion</td><td>Fecha inicial"
             +"</td><td>Fecha final</td></tr></table>"
                 let array1 = []
-                for (let i = 0; i >= g.length; i--) {
+                for (let i = 0; i <= g.length-1; i++) {
                     array1.push(g[i]) 
                 }
                 //################## no se han modificado los datos a recorrer en el array
                 array1.forEach(element => {
-                console.log(array1.length);
+                console.log(array1);
 
                     //########falta colocar las variables correspondientes
                     container_table.innerHTML+=
-                    "<table><tr><td>"+"iiiiii"+
-                    "</td><td>"+"aaaaa"+"</td><td>"+"eeeee"+
+                    "<table class='container_tr'><tr><td>"+element.idReservation+
+                    "</td><td>"+element.room.name+"</td><td>"+element.startDate+
                     "</td><td>"+
-                    "000000"+"</td></tr></table>"       
+                    element.devolutionDate+"</td><td class='container_calificacion'><input type='number' min='0' max ='5' class='inputNumber'><input type='button' value ='Calificar' class='calificarBtn'></td></tr></table>"       
                 });      
                 console.log("datos obtenidos");
-                console.log(g);
+                console.log(array1);
+                console.log(g.length);
             })
             ajax.fail(function(g){
                 console.log(g);
                 window.alert("Ocurrió un error en la consulta, intente de nuevo");
             })
         }
+
+
+
         //####falta obtener el id de la habitacion con el nombre de la habitacion
     function postDates(){
-        var ajax = $.ajax({
-          type:"POST",
-          url:urlBase + 'Reservation/save',
-          contentType: "application/json; charset=utf-8",
-                dataType: 'JSON',
-                data: JSON.stringify(
-                    {
-              // datos a enviar cambiados :)
-                        startDate:fechaInicial,
-                        devolutionDate:fechaFinal.value,
-                        client:{idClient:parseInt(idCliente.value)},
-                        room:{id:nombreHabitacion.value}
+        
+
+        // saber el id de la habitacion
+        fetch(urlBase + '/Room/all')
+        .then(res => res.json())
+        .then(res => {
+
+            for(x of res){
+                if(x.name == nombreHabitacion.value){
+                    //realiza ajax
+                    var ajax = $.ajax({
+                    type:"POST",
+                    url:urlBase + 'Reservation/save',
+                    contentType: "application/json; charset=utf-8",
+                            dataType: 'JSON',
+                            data: JSON.stringify(
+                                {
+                                    // datos a enviar cambiados :)
+                                    startDate:fechaInicial,
+                                    devolutionDate:fechaFinal.value,
+                                    client:{idClient:parseInt(idCliente.value)},
+                                    room:{id:x.id}
+                                })
                     })
-            
-           /*  {startDate:"2020-12-20",
-            devolutionDate:"2020-12-20",
-            client:{idClient:1},
-            room:{id:1}} */
+                    ajax.done(function(res){
+                        console.log("FINICIAL"+fechaFinal.value);
+                        console.log("FFINAL"+fechaInicial);
+                        console.log(res);
+                        alert('Datos cargados con éxito');
+                        
+                        idCliente.value=null;
+                        nombreHabitacion.value=null;
+                        //la fecha inicial no la coloca el cliente 
+                        //fechaInicial.value=null;
+                        fechaFinal.value=null;
+                    })
+                    ajax.fail(function(res){
+                        console.log(res);
+                        window.alert('Hubo un error al insertar los datos, intente de nuevo');
+                    })
+                }
+                
+            }
         })
-        ajax.done(function(res){
-            console.log(res);
-            alert('Datos cargados con éxito');
-            
-            idCliente.value=null;
-            nombreHabitacion.value=null;
-            //la fecha inicial no la coloca el cliente 
-            //fechaInicial.value=null;
-            fechaFinal.value=null;
-        })
-        ajax.fail(function(res){
-            console.log(res);
-            window.alert('Hubo un error al insertar los datos, intente de nuevo');
-        })
+        //.............................
+        
     } 
     </script>
 </body>

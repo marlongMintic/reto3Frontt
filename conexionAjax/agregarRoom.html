@@ -160,8 +160,10 @@
                 for (let i = g.length-1; i >= 0; i--) {
                     array1.push(g[i]) 
                 }
+                console.log(array1);
                 array1.forEach(element => {
-                    container_table.innerHTML+="<table><tr><td>"+element.room+"</td><td>"+element.stars+"</td><td>"+element.category_id+"</td><td>"+element.description+"</td></tr></table>"           
+                    container_table.innerHTML+="<table><tr><td>"+element.name+"</td><td>"+element.stars+"</td><td>"+element.category.id+"</td><td>"+element.description+"</td></tr></table>"           
+                    console.log(element);
                 });      
                 console.log(g);
                 console.log("datos obtenidos");
