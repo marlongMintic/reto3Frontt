@@ -18,8 +18,7 @@
         background-image: url(./img/fondo3.jpg);
         background-size: cover;
         background-repeat: no-repeat;
-        background-position-y: -200px;
-        
+        background-position-y: -200px;  
     }
     .container_btns{
         display: flex;
@@ -36,14 +35,12 @@
         background-color: #a6b2c0;
         color:white;
         border:2px solid #ffffff;
-
     }
     .container_btns input:hover{
         border:2px solid #c95028;
         
         box-shadow: 0px 0px 10px #8d8d8d;
     }
-   
     h1{
         margin: 70px 0 20px;
         letter-spacing: 3px;
@@ -58,23 +55,18 @@
         justify-content: center;
         width:400px;
         margin:0px auto 15px;
-
-        
     }
-  
     table:first-child{
         display: flex;
         justify-content: center;
         margin:0 auto;
         margin-top:30px ;
-
     }
     td{
         width: 200px;
         height: 40px;
         text-align: center;
-        border: 1px solid black;
-       
+        border: 1px solid black;   
     }
     td input{
         width:70% ;
@@ -87,31 +79,23 @@
     td input:hover{
         border:2px solid #794939;
         box-shadow: 0px 0px 5px #8d8d8d;
-
     }
     .container_table tr input {
         padding:2px 10px;
         width:auto;
         position: absolute;
-        margin-left: 95px;
-        
+        margin-left: 95px;  
     }
-
     .container_table_in1,.container_table_in2{
         display:none;  
     }
-  
     .container_dates_in{
         display: none;
     }
-    
 </style>
 <body>
-    
         <h1>HOTEL </h1>
-    
     <main>
-        
         <div class="container_btns">
             <input type="button" value="Ver Clientes" id="clientes" class = 'btn'>
 
@@ -121,7 +105,6 @@
             <a href="agregarAdmi.html">
                 <input type="button" value="Agregar Administrador"></a>
     
-
             <input type="button" value="Ver Habitaciones" id="habitaciones" class = 'btn'>
             
             <a href="agregarRoom.html">
@@ -136,11 +119,9 @@
             <a href="mensaje.html">
                 <input type="button" value="Enviar Mensaje"></a>
                 
-                
-            
                 <input type="button" value="Ver Mensajes" id="verMensaje">
         </div>
-        <div >
+        <div>
             <table>
                 <tr class="container_table_in1">
                     <td>ID</td>
@@ -150,7 +131,6 @@
                     <td>Id Cliente</td>
                     <td>Habitaicion</td>
                     <td>Mensaje</td>
-
                 </tr>
             </table>
             <table class="container_table" id="container_table_id">
@@ -200,7 +180,6 @@
             })
         })
         //###########################################
-
             verClientesBtn.addEventListener("click",function(){
             container_table_in1.style = "display:block"
             container_table_id.innerHTML = ""

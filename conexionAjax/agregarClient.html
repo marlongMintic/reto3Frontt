@@ -103,12 +103,7 @@
             </form>
         </div>
     </div>
-
-    <!-- <h2>Tabla:</h2> -->
     <div id = "container_table"></div>
-    
-
-    
 
     <script>
         //############cambiar la url 
@@ -119,7 +114,6 @@
         var ages= document.getElementById('edad');
         var contraseña= document.getElementById('contraseña');
 
-        
         var sendbtn= document.getElementById('sendbtn');
         var getbtn= document.getElementById('getbtn');
         
@@ -129,8 +123,7 @@
         var contenidoHeaderTabla = "<table><tr><td>ID</td><td>Nombre</td><td>Correo"
             +"</td><td>Edad</td><td>Mensajes</td><td>Reservaciones</td></tr></table>"
         container_table.innerHTML= contenidoHeaderTabla 
-            
-        
+
 
         sendbtn.addEventListener("click",function(){
             postDates();
@@ -139,7 +132,7 @@
             getDates();
         })
         function getDates(){
-            //añadir los messages":[],"reservations" de cada cliente
+            //añadir los messages":[]
             let ajax = $.ajax({
                 method:"GET",
                 url:urlBase + "Client/all",
@@ -163,16 +156,12 @@
                         let mess = element.messages[iMe].messageText
                         arrayMessages.push(mess)
                     }
-                    //-------------------------
                     //recorrido de reservaciones
                     for(let iRe = 0;iRe<= element.reservations.length-1;iRe++){
                         let reserv = new Date(element.reservations[iRe].startDate).toLocaleDateString()
                         console.log(reserv);
                         arrayReservations.push(reserv)
                     }
-                    //-------------------------
-
-
                     container_table.innerHTML+="<table class='default'><tr><td>"+element.idClient+"</td><td>"+element.name+"</td><td>"+element.email+"</td><td>"+element.age+"</td><td>"+arrayMessages+"</td><td style='word-wrap: break-word'>"+arrayReservations.length+"</td></tr></table>"           
                 });      
             })
@@ -189,7 +178,7 @@
                 parseInt(ages.value));
             let ajax = $.ajax({
                 method:"POST",
-                url:"http://144.22.56.156:8080/api/Client/save",
+                url:urlBase + "Client/save",
                 contentType: "application/json; charset=utf-8",
                 dataType: 'JSON',
                 data: JSON.stringify(
@@ -201,7 +190,6 @@
                     })
             })
             ajax.done(function(res){
-                console.log(res);
                 window.alert('Datos cargados con éxito');
                 
                 id.value=null;

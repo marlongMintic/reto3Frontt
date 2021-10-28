@@ -10,11 +10,7 @@
     <title>Mensaje</title>
 </head>
 <style>
-    *{
-        margin:0;
-        padding:0;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+    
     textarea {
         display: block;
         margin: 0 auto 20px;
@@ -26,9 +22,7 @@
         padding:10px;
         outline: none;
         box-shadow: 0px 0px 25px #b6b6b6;
-
     }
-
     .header{
         height:100px;
         display: flex;
@@ -62,12 +56,9 @@
         outline: none;
         border:2px solid #bebebe;
         border-radius: 6px;
-        
     }
-   
     form input:active{
         border:2px solid #4d7ce0;
-
     }
 </style>
 <body>
@@ -79,10 +70,9 @@
            <center> <!--<input type="text" name="mensaje" id="mensaje" placeholder="Escriba un mensaje...">-->
             <input type="text" placeholder="Id Cliente" aria-required="true" id="idCliente">
             <input type="text" placeholder="Nombre Habitacion" aria-required="true" id="nombreHabitacion">
-        </center>
+            </center>
             <textarea name="mensaje" id="mensaje" cols="30" rows="10"  required placeholder="Escriba su mensaje..."></textarea>
             <input type="button" value="Enviar" id="enviar" class = 'btn'>
-            
         </form>
         
         <a href="index.html"><input type="submit" value="Volver al inicio" class="btn"></a>
@@ -102,27 +92,26 @@
                     }
                 })
 
-        function postMensaje(){
+    function postMensaje(){
             fetch(urlBase + 'Room/all')
-.then(res => res.json())
-.then(res => {
-    for(x of res){
-        if(x.name == nombreHabitacion.value){
+            .then(res => res.json())
+            .then(res => {
+            for(x of res){
+                if(x.name == nombreHabitacion.value){
 
-            console.log(x.id);
-            var ajax = $.ajax({
-              type:"POST",
-              url:"http://144.22.56.156:8080/api/Message/save",
-              contentType: "application/json; charset=utf-8",
-                dataType: 'JSON',
-                data: JSON.stringify({
-                  //####no se si se tenga que enviar tambien el id del mensaje
-                    messageText:mensaje.value,
-                    client:{idClient:idCliente.value},
-                    //########falta tener el id de la habitacion con el nombre
-                    room:{id:x.id}                    
-                }) 
-            })
+                var ajax = $.ajax({
+                type:"POST",
+                url:"http://144.22.56.156:8080/api/Message/save",
+                contentType: "application/json; charset=utf-8",
+                    dataType: 'JSON',
+                    data: JSON.stringify({
+                    //####no se si se tenga que enviar tambien el id del mensaje
+                        messageText:mensaje.value,
+                        client:{idClient:idCliente.value},
+                        //########falta tener el id de la habitacion con el nombre
+                        room:{id:x.id}                    
+                    }) 
+                })
             ajax.done(function(g){
                 console.log("the message is:");
                 console.log(g);
@@ -134,11 +123,10 @@
                 console.log(g);
                 window.alert('Hubo un error al enviar el mensaje, intente de nuevo');
             })
-        }
-    }
-})
-            
-        } 
+                }
+            }
+        })
+    } 
     </script>
 </body>
 </html>

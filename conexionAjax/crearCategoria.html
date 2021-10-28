@@ -100,7 +100,6 @@
     </div>
 
     <div id = "container_table"></div>
-
     <script>
         var nombreCategoria= document.getElementById('nombreCategoria');
         var descripcion = document.getElementById('descripcion');
@@ -108,12 +107,13 @@
         var sendbtn= document.getElementById('sendbtn');
         var getbtn= document.getElementById('getbtn');
           
-        //Table
-        var container_table = document.getElementById('container_table');
-        container_table.innerHTML=
-        "<table><tr><td>Nombre categoria</td><td>Descripcion"
-            +"</td><td>Habitaciones</td></tr></table>"
         
+        var container_table = document.getElementById('container_table');
+        contenidoTable = "<table><tr><td>Nombre categoria</td><td>Descripcion"
+            +"</td><td>Habitaciones</td></tr></table>"
+
+        container_table.innerHTML= contenidoTable
+
 
         sendbtn.addEventListener("click",function(){
             postDates();
@@ -121,6 +121,7 @@
         getbtn.addEventListener("click",function(){
             getDates();
         })
+
         const urlBase = "http://144.22.56.156:8080/api/"
         function getDates(){
             const ajax = $.ajax({
@@ -129,45 +130,32 @@
             })
             ajax.done(function(g){
                 
-                container_table.innerHTML=""
-                container_table.innerHTML=
-                "<table><tr><td>Nombre categoria</td><td>Descripcion"
-                +"</td><td>Habitaciones</td></tr></table>"
-                let array1 = []
-                for (let i = g.length-1; i >= 0; i--) {
-                    array1.unshift(g[i]) 
-                }
-                //################## no se han modificado los datos a recorrer en el array
-                //#################### falta crear un arreglo donde s encuentren las habitaicones de cada categoria 
+                container_table.innerHTML= ""
+                container_table.innerHTML= contenidoTable
                 
-                let arrayHabitaciones = []
-                let arrayRandom = []
+                let array1 = []
+                for (let i = 0; i <= g.length-1; i++) {
+                    array1.push(g[i]) 
+                }
+                
                 array1.forEach(element => {
-                    //recorrer habitaciones
-                    /* arrayRandom.push(element) */
-                    /* for(x of arrayRandom){
-                        console.log(x.rooms.length);
-                         for(let i = 0;i<= x.rooms.length;i++){
-                                console.log(i);
-                              console.log('....');
-                             let hab = element.rooms[i].name
-                            console.log("dato "+hab);
-                            arrayHabitaciones.push(hab) 
-                        } 
-                    } */
+                        
+                    let arrayTemporal = []
+                    for(let i = 0;i <= element.rooms.length-1;i++){
+                        arrayTemporal.push(element.rooms[i].name);
+                    }
                     container_table.innerHTML+=
                         "<table class='default'><tr><td>"+element.name+
                         "</td><td>"+element.description+"</td><td>"+
-                        arrayHabitaciones/*####aqui van las habitaciones de esta categoria*/+"</td></tr></table>"           
+                        arrayTemporal+"</td></tr></table>"           
                 });      
-                console.log("datos obtenidos");
-                console.log(g);
             })
             ajax.fail(function(g){
                 console.log(g);
                 window.alert("Ocurrió un error en la consulta, intente de nuevo");
             })
         }
+
     function postDates(){
         var ajax = $.ajax({
           type:"POST",
@@ -183,16 +171,14 @@
         ajax.done(function(res){
             console.log(res);
             alert('Datos cargados con éxito');
-            
-           nombreCategoria.value = null;
-           descripcion.value = null;
+            nombreCategoria.value = null;
+            descripcion.value = null;
         })
         ajax.fail(function(res){
             console.log(res);
             window.alert('Hubo un error al insertar los datos, intente de nuevo');
         })
     } 
-    
     </script>
 </body>
 </html>

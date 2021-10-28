@@ -94,14 +94,11 @@
     <a href="index.html"><input type="button" value="Volver al inicio" class="btn_volver"></a>
     <div class="container_form">
             <h1>Crear Reserva</h1>
-
         <div>
             <form action="" method="post">
                 <div>
                     <input type="text" name="idCliente" id="idCliente" placeholder="Id cliente">
                     <input type="text" name="nombreHabitacion" id="nombreHabitacion" placeholder="Nombre Habitacion">
-                    <!-- #########no se si la fecha inicial es tomada del sistema o por el usuario -->
-                    <!-- <input type="text" name="fechaInicial" id="fechaInicial" placeholder="Fecha inicial">-->
                     <input type="date"  name="fechaFinal" id="fechaFinal" placeholder="Fecha final"> 
                         
                 </div>
@@ -112,20 +109,10 @@
             </form>
         </div>
     </div>
-
-    <!-- <h2>Tabla:</h2> -->
     <div id = "container_table"></div>
-    <!-- tabla que se mostrara abajo de la primera fila -->
-  <!--   <table class="container_tr"><tr ><td >"+iiiiii+
-        "</td><td>"+aaaaa+"</td><td>"+eeeee+
-        "</td><td>"+
-        000000+" </td><td class="container_calificacion"><input type="number" min="0" max ="5" id="inputNumber"><input type="button" value ="Calificar" id="calificarBtn"></td></tr></table>
- -->
     <script>
         var idCliente= document.getElementById('idCliente');
         var nombreHabitacion= document.getElementById('nombreHabitacion');
-        //var fechaInicial= document.getElementById('fechaInicial');
-        // ###########por si la fecha es del dia actual y el usuario no tiene que ingresarla
         function fechaAhora(){
             var fecha = new Date()
             var dia = fecha.getDate()
@@ -143,14 +130,14 @@
         
         var sendbtn= document.getElementById('sendbtn');
         var getbtn= document.getElementById('getbtn');
-          
-        //Table
-        var container_table = document.getElementById('container_table');
-        container_table.innerHTML=
-            "<table><tr><td>Id cliente</td><td>Nombre habitacion</td><td>Fecha inicial"
-            +"</td><td>Fecha final</td></tr></table>"
-        
+        const urlBase = "http://144.22.56.156:8080/api/"
 
+          
+        var container_table = document.getElementById('container_table');
+        containTable = "<table><tr><td>Id Reserva</td><td>Nombre habitacion</td><td>Fecha inicial"
+            +"</td><td>Fecha final</td></tr></table>"
+        container_table.innerHTML= containTable
+            
         /* ##############################################
         calificarBtn.addEventListener("click",function(){
             //#########falta colocar el dato de calificacion 
@@ -165,8 +152,7 @@
         getbtn.addEventListener("click",function(){
             getDates();
         })
-        //###################falta cambiar la url de donde se traeran los datos
-        const urlBase = "http://144.22.56.156:8080/api/"
+        
         function getDates(){
             const ajax = $.ajax({
                 method:"GET",
@@ -175,34 +161,22 @@
             ajax.done(function(g){
                 
                 container_table.innerHTML=""
-                container_table.innerHTML=
-                "<table><tr><td>Id cliente</td><td>Nombre habitacion</td><td>Fecha inicial"
-            +"</td><td>Fecha final</td></tr></table>"
+                container_table.innerHTML= containTable
+                
                 let array1 = []
                 for (let i = 0; i <= g.length-1; i++) {
                     array1.push(g[i]) 
                 }
-                //################## no se han modificado los datos a recorrer en el array
                 array1.forEach(element => {
-                console.log(array1);
-                    //obetner fecha
 
                     let fechaFormatStart = new Date(element.startDate).toLocaleDateString()
                     let fechaFormatDevolution = new Date(element.devolutionDate).toLocaleDateString()
 
-                   
-
-
-
-                    //########falta colocar las variables correspondientes
                     container_table.innerHTML+=
                     "<table class='container_tr'><tr><td>"+element.idReservation+
                     "</td><td>"+element.room.name+"</td><td>"+fechaFormatStart+
                     "</td><td>"+ fechaFormatDevolution+"</td></tr></table>"       
                 });      
-                console.log("datos obtenidos");
-                console.log(array1);
-                console.log(g.length);
             })
             ajax.fail(function(g){
                 console.log(g);
@@ -210,13 +184,8 @@
             })
         }
 
-
-
-        //####falta obtener el id de la habitacion con el nombre de la habitacion
     function postDates(){
         
-
-        // saber el id de la habitacion
         fetch(urlBase + '/Room/all')
         .then(res => res.json())
         .then(res => {
@@ -231,7 +200,6 @@
                             dataType: 'JSON',
                             data: JSON.stringify(
                                 {
-                                    // datos a enviar cambiados :)
                                     startDate:fechaInicial,
                                     devolutionDate:fechaFinal.value,
                                     client:{idClient:parseInt(idCliente.value)},
@@ -246,8 +214,6 @@
                         
                         idCliente.value=null;
                         nombreHabitacion.value=null;
-                        //la fecha inicial no la coloca el cliente 
-                        //fechaInicial.value=null;
                         fechaFinal.value=null;
                     })
                     ajax.fail(function(res){
@@ -255,11 +221,8 @@
                         window.alert('Hubo un error al insertar los datos, intente de nuevo');
                     })
                 }
-                
             }
         })
-        //.............................
-        
     } 
     </script>
 </body>
